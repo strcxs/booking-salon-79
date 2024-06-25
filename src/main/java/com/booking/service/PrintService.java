@@ -32,12 +32,12 @@ public class PrintService {
     // Function yang dibuat hanya sebgai contoh bisa disesuaikan kembali
     public void showRecentReservation(List<Reservation> reservationList){
         int num = 1;
-        System.out.printf("| %-4s | %-4s | %-20s | %-25s | %-15s | %-15s | %-15s |\n",
+        System.out.printf("| %-4s | %-4s | %-20s | %-35s | %-15s | %-15s | %-15s |\n",
                 "No.", "ID", "Nama Customer", "Service", "Biaya Service", "Pegawai", "Workstage");
-        System.out.println("+================================================================================================+");
+        System.out.println("+================================================================================================================================+");
         for (Reservation reservation : reservationList) {
             if ( reservation.getWorkstage().equalsIgnoreCase("In process")) {
-                System.out.printf("| %-4s | %-4s | %-20s | %-25s | %-15s | %-15s | %-15s |\n",
+                System.out.printf("| %-4s | %-4s | %-20s | %-35s | %-15s | %-15s | %-15s |\n",
                 num, reservation.getReservationId(), reservation.getCustomer().getName(), printServices(reservation.getServices()), reservation.getReservationPrice(), reservation.getEmployee().getName(), reservation.getWorkstage());
                 num++;
             }
@@ -48,7 +48,7 @@ public class PrintService {
         int num = 1;
         System.out.printf("| %-4s | %-8s | %-11s | %-15s | %-15s | %-15s |\n",
                 "No.", "ID", "Nama", "Alamat", "Membership", "Uang");
-        System.out.println("+========================================================================================+");
+        System.out.println("+=====================================================================================+");
         for (Customer customer : customerList) {
             System.out.printf("| %-4s | %-8s | %-11s | %-15s | %-15s | %-15s |\n",
             num, customer.getId(), customer.getName(), customer.getAddress(), customer.getMember().getMembershipName(), customer.getWallet());
@@ -60,7 +60,7 @@ public class PrintService {
         int num = 1;
         System.out.printf("| %-4s | %-8s | %-11s | %-15s | %-15s |\n",
                 "No.", "ID", "Nama", "Alamat", "Pengalaman");
-        System.out.println("+========================================================================================+");
+        System.out.println("+===================================================================+");
         for (Employee employee : employeeList) {
             System.out.printf("| %-4s | %-8s | %-11s | %-15s | %-15s |\n",
             num, employee.getId(), employee.getName(), employee.getAddress(), employee.getExperience());
@@ -72,7 +72,7 @@ public class PrintService {
         int num = 1;
         System.out.printf("| %-4s | %-8s | %-20s | %-15s |\n",
                 "No.", "ID", "Nama", "Harga");
-        System.out.println("+========================================================================================+");
+        System.out.println("+==========================================================+");
         for (Service service : serviceList) {
             System.out.printf("| %-4s | %-8s | %-20s | %-15s |\n",
             num, service.getServiceId(), service.getServiceName(), service.getPrice());
@@ -82,15 +82,20 @@ public class PrintService {
 
     public void showHistoryReservation(List<Reservation> reservationList){
         int num = 1;
-        System.out.printf("| %-4s | %-4s | %-20s | %-25s | %-15s |\n",
-                "No.", "ID", "Nama Customer", "Nama Service", "Total Biaya");
-        System.out.println("+================================================================================================+");
+        Double total = 0.0;
+        System.out.printf("| %-4s | %-4s | %-20s | %-35s | %-15s | %-15s |\n",
+                "No.", "ID", "Nama Customer", "Service", "Total Biaya","WorkStage");
+        System.out.println("+==============================================================================================================+");
         for (Reservation reservation : reservationList) {
             if (reservation.getWorkstage().equalsIgnoreCase("Finish")) {
-                System.out.printf("| %-4s | %-4s | %-20s | %-25s | %-15s |\n",
-                num, reservation.getReservationId(), reservation.getCustomer().getName(), printServices(reservation.getServices()), reservation.getReservationPrice(), reservation.getEmployee().getName(), reservation.getWorkstage());
+                System.out.printf("| %-4s | %-4s | %-20s | %-35s | %-15s | %-15s |\n",
+                num, reservation.getReservationId(), reservation.getCustomer().getName(), printServices(reservation.getServices()), reservation.getReservationPrice(), reservation.getWorkstage());
                 num++;
+                total += reservation.getReservationPrice();
             }
         }
+        System.out.println("+==============================================================================================================+");
+        System.out.printf("| %-72s | %-33s |\n",
+                "Total Keuntungan","Rp "+total);
     }
 }

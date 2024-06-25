@@ -2,6 +2,7 @@ package com.booking.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.booking.models.Customer;
@@ -170,8 +171,21 @@ public class MenuService {
                                 } while (!stopAddService);
                             }
                         } while (!check && !end);
-                        System.out.println("Input reservasi ID :");
-                        String reservasiID = input.nextLine();
+                        
+                        Random random = new Random();
+                        int randomID = random.nextInt(90)+10;
+                        String reservasiID = "R"+randomID;
+                        boolean randomCek = true;
+                        
+                        do {
+                            randomCek = true;
+                            for (Reservation reservation : reservationList) {
+                                if (reservation.getReservationId().toUpperCase().equals(reservasiID.toUpperCase())) {
+                                    randomCek = false;
+                                }
+                            }
+                        } while (!randomCek);
+
                         Customer customerResv=null;
                         Employee employeeResv=null;
 
